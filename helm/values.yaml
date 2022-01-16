@@ -1,0 +1,43 @@
+replicaCount: 1
+image:
+  repository: ""
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+ingress:
+  enabled: false
+  host: test
+service:
+  type: NodePort
+  port: 80
+  targetport: 80
+  nodeport: 31472
+
+resources: 
+  limits:
+    cpu: 300m
+    memory: 500Mi
+  requests:
+    cpu: 100m
+    memory: 110Mi
+
+livenessProbe:
+  enabled: true
+  # path: /health
+  path: /
+  initialDelaySeconds: 10
+  periodSeconds: 60
+  timeoutSeconds: 10
+  successThreshold: 1
+  failureThreshold: 4
+
+readinessProbe:
+  enabled: true
+  # path: /health
+  path: /
+  initialDelaySeconds: 10
+  periodSeconds: 20
+  timeoutSeconds: 10 
+  successThreshold: 1
+  failureThreshold: 3

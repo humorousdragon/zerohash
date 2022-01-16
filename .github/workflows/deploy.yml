@@ -9,30 +9,50 @@ on:
   
 jobs:
   
-  build:
-    name: Build Image and push to ECR
+  # build:
+  #   name: Build Image and push to ECR
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.ZH_AWS_ACCESS_KEY }}
+  #         aws-secret-access-key: ${{ secrets.ZH_AWS_SECRET_KEY }}
+  #         aws-region: us-east-2
+      
+  #     - name: Login to ECR
+  #       id: login-ecr
+  #       uses: aws-actions/amazon-ecr-login@v1
+
+  #     - name: Build, tag and push image to ECR
+  #       env:
+  #         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  #         ECR_REPOSITORY: btc-spot-price
+  #         IMAGE_TAG: ${{ github.sha }}
+  #       run: |
+  #         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+  #         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  deploy_helm:
+    name: Deploy via helm charts
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout out code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.ZH_AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.ZH_AWS_SECRET_KEY }}
-          aws-region: us-east-2
-      
-      - name: Login to ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag and push image to ECR
+      - name: Deploy
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: btc-spot-price
-          IMAGE_TAG: ${{ github.sha }}
+          # IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: 1.0.0
+          AWS_ACCESS_KEY_ID: ${{ secrets.ZH_AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: $ {{ secrets.ZH_AWS_SECRET_KEY }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo ${{ secrets.KUBECONFIG }} | base64 -d > $(pwd)/config
+          docker run  -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -v $(pwd)/config:/root/.kube/config -v $(pwd)/:/apps concirrussre/helm:3.5.0 upgrade --install btc-spot-price ./helm --set image.tag=$MAGE_TAG --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY --namespace=default
