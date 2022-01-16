@@ -1,0 +1,38 @@
+name: Build the service
+
+on:
+  push:
+    branches:
+      - "master"
+  
+  workflow_dispatch:
+  
+jobs:
+  
+  build:
+    name: Build Image and push to ECR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout out code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ZH_AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.ZH_AWS_SECRET_KEY }}
+          aws-region: us-east-2
+      
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag and push image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: btc-spot-price
+          IMAGE_TAG: 1.0.0
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
