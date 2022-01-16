@@ -47,12 +47,14 @@ jobs:
 
       - name: Deploy
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          # ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: 590532860066.dkr.ecr.us-east-2.amazonaws.com
           ECR_REPOSITORY: btc-spot-price
           # IMAGE_TAG: ${{ github.sha }}
           IMAGE_TAG: 1.0.0
           AWS_ACCESS_KEY_ID: ${{ secrets.ZH_AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: $ {{ secrets.ZH_AWS_SECRET_KEY }}
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
-          echo ${{ secrets.KUBECONFIG }} | base64 -d > $(pwd)/config
+          echo $KUBECONFIG | base64 -d > $(pwd)/config
           docker run  -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -v $(pwd)/config:/root/.kube/config -v $(pwd)/:/apps concirrussre/helm:3.5.0 upgrade --install btc-spot-price ./helm --set image.tag=$MAGE_TAG --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY --namespace=default
