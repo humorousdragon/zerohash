@@ -4,7 +4,7 @@ import sys
 from flask import Flask
 from datetime import datetime as dt
 import os
-from healthcheck import HealthCheck
+# from healthcheck import HealthCheck
 
 # EUR, GBP, USD and JPY
 app = Flask(__name__)
@@ -32,9 +32,9 @@ def price_in_curr(curr):
     spot_price = get_spot_price(curr)
     return spot_price
 
-# @app.route("/health")
-# def health():
-#     return "Success"
+@app.route("/health")
+def health():
+    return 200
 
 ## Returns BTC Spot price in USD
 @app.route("/USD")
