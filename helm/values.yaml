@@ -11,7 +11,7 @@ ingress:
 service:
   type: NodePort
   port: 80
-  targetport: 80
+  targetport: 8080
   nodeport: 31472
 
 resources: 
@@ -26,9 +26,9 @@ livenessProbe:
   enabled: true
   path: /health
   # path: /
-  initialDelaySeconds: 10
-  periodSeconds: 60
-  timeoutSeconds: 10
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 4
 
@@ -36,8 +36,8 @@ readinessProbe:
   enabled: true
   path: /health
   # path: /
-  initialDelaySeconds: 10
-  periodSeconds: 20
-  timeoutSeconds: 10 
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 5 
   successThreshold: 1
   failureThreshold: 3
