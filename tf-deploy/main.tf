@@ -32,7 +32,7 @@ resource "kubernetes_namespace" "zerohash" {
 resource "kubernetes_deployment" "zerohash" {
   metadata {
     name      = "nginx"
-    namespace = kubernetes_namespace.test.metadata.0.name
+    namespace = kubernetes_namespace.zerohash.metadata.0.name
   }
   spec {
     replicas = 1
@@ -59,14 +59,14 @@ resource "kubernetes_deployment" "zerohash" {
     }
   }
 }
-resource "kubernetes_service" "test" {
+resource "kubernetes_service" "zerohash" {
   metadata {
     name      = "nginx"
-    namespace = kubernetes_namespace.test.metadata.0.name
+    namespace = kubernetes_namespace.zerohash.metadata.0.name
   }
   spec {
     selector = {
-      app = kubernetes_deployment.test.spec.0.template.0.metadata.0.labels.app
+      app = kubernetes_deployment.zerohash.spec.0.template.0.metadata.0.labels.app
     }
     type = "NodePort"
     port {
