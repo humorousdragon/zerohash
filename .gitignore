@@ -1,0 +1,11 @@
+tf-deploy/.terraform
+tf-deploy/.terraform*
+tf-deploy/.terraform.lock.hcl
+tf-deploy/terraform.tfstate
+tf-deploy/terraform.tfstate.backup
+tf-deploy/terraform.tfstate*
+tf-deploy/*.pem
+*.pem
+# tf-deploy/eks-config
+__pycache__
+.pytest_cache

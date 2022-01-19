@@ -1,0 +1,163 @@
+{
+	"info": {
+		"_postman_id": "8d9eae9d-39f8-4dc4-b519-d819dc299474",
+		"name": "ZeroHash",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "root_url_request_tests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response is ok', function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"tests['Response time is less than 2000ms'] = responseTime <2000"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://spot.zerohash.online",
+					"protocol": "https",
+					"host": [
+						"spot",
+						"zerohash",
+						"online"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "health_url_request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response is ok', function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-type is application json\", function(){\r",
+							"    pm.response.to.be.header(\"Content-Type\", \"application/json\")\r",
+							"});\r",
+							"\r",
+							"tests['Response time is less than 2000ms'] = responseTime <2000"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://spot.zerohash.online/health",
+					"protocol": "https",
+					"host": [
+						"spot",
+						"zerohash",
+						"online"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "currency_url_requests_test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response is ok', function(){\r",
+							"    pm.response.to.have.status(200)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-type is application json\", function(){\r",
+							"    pm.response.to.be.header(\"Content-Type\", \"application/json\")\r",
+							"});\r",
+							"\r",
+							"pm.test('JSON response parse check',function(){\r",
+							"    var jsonData = pm.response.json();\r",
+							"    console.log(jsonData)\r",
+							"    pm.expect(typeof(jsonData.data.amount)).equal('string')\r",
+							"    pm.expect(jsonData.data.amount).not.equal(null)\r",
+							"    pm.expect(typeof(jsonData.data.base)).equal('string')\r",
+							"    pm.expect(jsonData.data.base).not.equal(null)\r",
+							"    pm.expect(typeof(jsonData.data.currency)).equal('string')\r",
+							"    pm.expect(jsonData.data.currency).not.equal(null)\r",
+							"})\r",
+							"\r",
+							"tests['Response time is less than 2000ms'] = responseTime <2000"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://spot.zerohash.online/USD",
+					"protocol": "https",
+					"host": [
+						"spot",
+						"zerohash",
+						"online"
+					],
+					"path": [
+						"USD"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "other_url_requests_tests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response is not proper', function(){\r",
+							"    pm.response.to.not.have.status(200)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://spot.zerohash.online/any",
+					"protocol": "https",
+					"host": [
+						"spot",
+						"zerohash",
+						"online"
+					],
+					"path": [
+						"any"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

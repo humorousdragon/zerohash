@@ -1,0 +1,27 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM1ekNDQWMrZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJeU1ERXhOakV6TWpVek4xb1hEVE15TURFeE5ERXpNalV6TjFvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTDRSClhMbnJLdThKM0EvNFlrcXJ3SVBYRmlyMVpkZUtIZ2JjVTFweXlYR0NaN1EyaE0rRlY4bDJId3ViS25weVJmSXAKTEczeEJEd3VPV29RaTI4aXFYS1hjK2NCamxlNDhtRjlPeTRkTnJGNXN2YVE4WncrVEp1WnlKczA0Q3lHN0V6awowdGN4VTJOU0kyY0ZwWHM2NWFQWW9qSENZOThWYkR2Zmx0dHUyMzhHejV1SE1nakRxNWtNQnY1YUJaOG9yTFphClluV1ZoL2RpNEFEZTdFWjhHZmRkV0pObkk4QVRROWVkUkFLaXpjejRPSHd1S1ZzcFBRYmt0Skk3a1R0eDFGeTMKeGZzOFFqM0RhMmN0Z3krOHdvZ21GTHpRVloxRVZxN0E2NER2UGI4WDlBd2dUNUZZU2cxNWJ1YzZtdW9ERXh5ZgpjQisyUVdXTU1yZEJJR21SK2RNQ0F3RUFBYU5DTUVBd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZOZi9WZmZFNUh6c0tyZzlrRnoxUFR4elRyS2hNQTBHQ1NxR1NJYjMKRFFFQkN3VUFBNElCQVFDYkZ0RWZQU0tYOS83V1VXVThqYTRuQlNMdDVpcGpBRHFtNU9CdHkvRUtBMnlGODcyRQo5dS9vWDlDMGlVZHBuYW95VXJJOUdzRGlmUDZZblVCUW5nZzJsVWRjWkZycld5Z0tPRkhwenpNRVR0blJYV3Z6CkdoTXFwbUx6OHpUUjFuaUFaT2hvaFE1NTNyTjZmT2ZiVVRaNVdZVFp0RGk4ZHA0ZWdmVnhqZFNSc2NQdmRYOVMKSGkyQTNGNXd4VkR0b3E4eldrRms3R1QzR3c2K1NxWW4rZ3VGOXlkQTA0UDFiUnJRYnV6OGxYbGM3dVFIa1JHaQpvUzQ4NzBrV0JQeGZvN1dwZ05LY0NzT2l6QncyMFVVa0krYnVRMllHclRHN1ZBY21aV3phckJheGZJRzRxb2lNCjBEa3ozUEl1RCtxZG5PTFAyQTdiOC9CTUJ0M1BsaGE2NE5YZQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    server: https://03A78CD51665DA027AC54A5DA5F18DF7.gr7.us-east-2.eks.amazonaws.com
+  name: arn:aws:eks:us-east-2:590532860066:cluster/zerohash-dev
+contexts:
+- context:
+    cluster: arn:aws:eks:us-east-2:590532860066:cluster/zerohash-dev
+    user: arn:aws:eks:us-east-2:590532860066:cluster/zerohash-dev
+  name: arn:aws:eks:us-east-2:590532860066:cluster/zerohash-dev
+current-context: arn:aws:eks:us-east-2:590532860066:cluster/zerohash-dev
+kind: Config
+preferences: {}
+users:
+- name: arn:aws:eks:us-east-2:590532860066:cluster/zerohash-dev
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1alpha1
+      args:
+      - --region
+      - us-east-2
+      - eks
+      - get-token
+      - --cluster-name
+      - zerohash-dev
+      command: aws

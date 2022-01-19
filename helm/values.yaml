@@ -26,8 +26,8 @@ livenessProbe:
   enabled: true
   path: /health
   # path: /
-  initialDelaySeconds: 5
-  periodSeconds: 5
+  initialDelaySeconds: 10
+  periodSeconds: 30
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 4
@@ -36,8 +36,8 @@ readinessProbe:
   enabled: true
   path: /health
   # path: /
-  initialDelaySeconds: 5
-  periodSeconds: 5
+  initialDelaySeconds: 10
+  periodSeconds: 10
   timeoutSeconds: 5 
   successThreshold: 1
   failureThreshold: 3
