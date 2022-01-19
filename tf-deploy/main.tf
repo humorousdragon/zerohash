@@ -24,12 +24,12 @@ terraform {
 provider "kubernetes" {
   config_path = "./eks-config"
 }
-resource "kubernetes_namespace" "test" {
+resource "kubernetes_namespace" "zerohash" {
   metadata {
-    name = "nginx"
+    name = "zerohash"
   }
 }
-resource "kubernetes_deployment" "test" {
+resource "kubernetes_deployment" "zerohash" {
   metadata {
     name      = "nginx"
     namespace = kubernetes_namespace.test.metadata.0.name
@@ -70,7 +70,7 @@ resource "kubernetes_service" "test" {
     }
     type = "NodePort"
     port {
-      node_port   = 32101
+      node_port   = 31111
       port        = 80
       target_port = 80
     }
