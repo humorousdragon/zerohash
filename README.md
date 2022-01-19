@@ -16,7 +16,7 @@ This repo contains code files, pipeline file, dockerfile, helm charts, terraform
 - *tf-deploy* folder contains terraform file(s) to deploy resources on the kubernetes cluster.
 - *.gihub/workflow* directory has pipeline file (deploy.yml) which run various jobs with github actions.  
 
-**Note:** As of now helm charts are being used to deploy application on the cluster, terraform is deploying nginx on cluster in *test* namespace and have been created just for testing purposes.  
+**Note:** As of now helm charts are being used to deploy application on the cluster, terraform is deploying nginx on cluster in *zerohash* namespace and have been created just for testing purposes.  
 
 ## To deploy application on EKS Cluster using CI/CD:
 First we would need an EKS cluster. If it is setup then get credentials e.g. kubeconfig file so that request to deploy on cluster can be authorized. Get base64 of kubeconfig file by running `cat kubeconfig | base64` and store the output on repository as secret with key name as `KUBECONFIG`.
@@ -37,3 +37,5 @@ Once this job completes we should see deployment on the kubernetes cluster.
 3. Third job is to deploy resources on kubernetes cluster using helm charts.
 4. Fourth job is to perform api testing of the application running on the cluster which we deployed in 3rd job.
 5. Fifth job is to test deployment of resources on cluster using terraform.
+
+I hope to keep working on this and improve it wherever possible.
