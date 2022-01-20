@@ -37,6 +37,7 @@ Once this job completes we should see deployment on the kubernetes cluster.
 3. Third job is to deploy resources on kubernetes cluster using helm charts.
 4. Fourth job is to perform api testing of the application running on the cluster which we deployed in 3rd job.
 5. Fifth job is to test deployment of resources on cluster using terraform.  
-**Note: ** We would receive ***SLACK NOTIFICATION*** for all jobs about job status whether it is *success*, *failure*, or *warnings*.  
+
+**Note:** We would receive ***SLACK NOTIFICATION*** for all jobs about job status whether it is *success*, *failure*, or *warnings*.  
 
 I hope to keep working on this and improve it wherever possible.
