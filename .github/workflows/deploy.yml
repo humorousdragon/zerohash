@@ -31,6 +31,15 @@ jobs:
         run: |
           pytest
 
+      - name: Report Job Status
+        if: always()
+        uses: ravsamhq/notify-slack-action@master
+        with:
+          status: ${{ job.status }}
+          notify_when: 'success,failure,warnings'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
 ## Job to build docker image and push to ECR
   build:
     name: Build Image and push to ECR
@@ -61,6 +70,15 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
+      - name: Report Job Status
+        if: always()
+        uses: ravsamhq/notify-slack-action@master
+        with:
+          status: ${{ job.status }}
+          notify_when: 'success,failure,warnings'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
 ## Job to deploy application on EKS cluster using Helm charts
   deploy_helm:
     name: Deploy via helm charts
@@ -85,6 +103,15 @@ jobs:
         run: |
           echo $KUBECONFIG | base64 -di > $(pwd)/config
           docker run -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -v $(pwd)/config:/root/.kube/config -v $(pwd)/:/apps concirrussre/helm:3.5.0 upgrade --install btc-spot-price ./helm --set image.tag=$IMAGE_TAG --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY --namespace=default
+
+      - name: Report Job Status
+        if: always()
+        uses: ravsamhq/notify-slack-action@master
+        with:
+          status: ${{ job.status }}
+          notify_when: 'success,failure,warnings'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
 ## Job to perform api testing on application running on EKS cluster
   api_test:
@@ -111,6 +138,15 @@ jobs:
       - name: Run postman collection
         run: |
           newman run zh_api_test.json -r cli
+
+      - name: Report Job Status
+        if: always()
+        uses: ravsamhq/notify-slack-action@master
+        with:
+          status: ${{ job.status }}
+          notify_when: 'success,failure,warnings'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
 
 ## Job to deploy application on EKS using terraform
   terraform:
